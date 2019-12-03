@@ -1,21 +1,33 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, {Component} from 'react';
+import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+  constructor(){
+    super();
+    this.state = {
+      filtered: '',
+      fruitList: ['blueberry', 'strawberry', 'mango', 'lemon', 'orange']
+    }
+  }
+
+  handleChange(filteredFruit) {
+    this.setState({ filtered: filteredFruit })
+  }
+
+  render(){
+    let fruitsList = this.state.fruitList
+      .filter((e, i) => {
+        return e.includes(this.state.filtered)
+      })
+      .map((e, i) => {
+      return <h2 key={i}>{e}</h2>
+      })
+    return(
+      <div className='App'>
+        <input onChange={e => this.handleChange(e.target.value)} type="text"/>
+        {fruitsList}
       </div>
-    );
+    )
   }
 }
-
 export default App;
